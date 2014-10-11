@@ -137,6 +137,8 @@ public class MyActivity extends Activity {
             Intent share = new Intent(android.content.Intent.ACTION_SEND);
             share.setType("text/plain");
 
+            String myPath = "path/to/file";
+
             // gets the list of intents that can be loaded.
             List<ResolveInfo> resInfo = getActivity().getPackageManager().queryIntentActivities(share, 0);
             if (!resInfo.isEmpty()){
@@ -145,6 +147,7 @@ public class MyActivity extends Activity {
                             info.activityInfo.name.toLowerCase().contains(type) ) {
                         share.putExtra(Intent.EXTRA_SUBJECT,  "subject");
                         share.putExtra(Intent.EXTRA_TEXT,     "your text");
+                        share.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(myPath)) ); // Optional, just if you wanna share an image.
                         share.setPackage(info.activityInfo.packageName);
                         found = true;
                         break;
